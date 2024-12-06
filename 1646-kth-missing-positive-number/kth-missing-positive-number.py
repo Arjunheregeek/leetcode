@@ -1,6 +1,6 @@
 class Solution:
     def findKthPositive(self, arr: List[int], k: int) -> int:
-        index =0
+       
         start=0
         count=0
 

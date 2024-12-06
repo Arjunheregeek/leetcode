@@ -8,10 +8,10 @@ class Solution:
             if start not in arr :
                 if count==k:
                     return start
-                start+=1
+               
                 count+=1
-            else:
-                start+=1
+            start+=1
+            
             
 
         

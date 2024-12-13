@@ -1,7 +1,8 @@
 class Solution(object):
     def rotate(self, nums, k):
-        ans=[0]*len(nums)
-        for i in range (len(nums)):
-            ans[(i+k)%len(nums)]=nums[i]
-        for i in range (len(nums)):
+        n=len(nums)
+        ans=[0]*n
+        for i in range (n):
+            ans[(i+k)%n]=nums[i]
+        for i in range (n):
             nums[i]=ans[i]

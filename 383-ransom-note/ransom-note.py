@@ -14,8 +14,7 @@ class Solution(object):
         mag=Counter( magazine)
         ran=Counter(ransomNote)
         for  key , value in ran.items():
-            if ran[key]<=mag[key]:
-                continue
-            else:
+            if ran[key]>mag[key]:
                 return False
+           
         return True

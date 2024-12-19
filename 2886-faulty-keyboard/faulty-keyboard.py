@@ -1,12 +1,8 @@
 class Solution(object):
     def finalString(self, s):
-        k=""
-        for i in s:
-            if i =="i":
-                k=k[::-1]
-                continue
-            k=k+i
-        return k
-
-
+        while "i" in s:
+            index=s.index("i")
+            s=s[:index][::-1]+s[index+1:]
+        return s 
+        
         

@@ -1,21 +1,23 @@
+from collections import Counter
+from typing import List
+
 class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:
-        # Count the frequency of each number
+        # Step 1: Count the frequency of each number
         count = Counter(nums)
         
-        # Initialize the result list
+        # Step 2: Create the result list
         result = []
+
+        # Step 3: Create a list of buckets based on the frequency of each number
+        max_frequency = max(count.values())  # The number of rows needed is determined by the max frequency
+        buckets = [[] for _ in range(max_frequency)]
+
+        # Step 4: Distribute the numbers into the buckets
+        for num, freq in count.items():
+            for i in range(freq):
+                buckets[i].append(num)
         
-        # The number of rows will be the maximum frequency
-        max_frequency = max(count.values())
-        
-        # Create the result array by filling rows one at a time
-        for i in range(max_frequency):
-            row = []
-            for key, freq in count.items():
-                if freq > 0:
-                    row.append(key)
-                    count[key] -= 1  # Decrease the frequency of the number
-            result.append(row)
-        
+        # Step 5: Return the result by collecting the rows from the buckets
+        result = buckets
         return result

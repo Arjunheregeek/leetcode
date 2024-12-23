@@ -1,23 +1,21 @@
 class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:
-        # Create a Counter to count occurrences of each number
+        # Count the frequency of each number
         count = Counter(nums)
         
         # Initialize the result list
-        ans = []
+        result = []
         
-        # While there are still elements to distribute
-        while count:
+        # The number of rows will be the maximum frequency
+        max_frequency = max(count.values())
+        
+        # Create the result array by filling rows one at a time
+        for i in range(max_frequency):
             row = []
-            # Collect numbers that can be added to this row
-            for key in list(count):
-                if count[key] > 0:
+            for key, freq in count.items():
+                if freq > 0:
                     row.append(key)
-                    count[key] -= 1
-                    if count[key] == 0:
-                        del count[key]  # Remove the key once its count reaches 0
-            
-            # Add the formed row to the answer
-            ans.append(row)
+                    count[key] -= 1  # Decrease the frequency of the number
+            result.append(row)
         
-        return ans
+        return result

@@ -4,18 +4,20 @@ class Solution:
         start=0
         end= k-1
         ma=0
-        l=0
+       
         vo={"a","i","e","o","u"}
+        for j in s[start:end+1]:
+
+
+            if j in vo:
+                count+=1
+        start+=1
+        end+=1
+        ma=count
         while end <len(s):
-            if l==0:
-                for j in s[start:end+1]:
-                    if j in vo:
-                        count+=1
-                start+=1
-                end+=1
-                ma=count
-                l=1
-                continue
+            
+                
+               
             if s[end] in vo :
                 count+=1
             if s[start-1] in vo :

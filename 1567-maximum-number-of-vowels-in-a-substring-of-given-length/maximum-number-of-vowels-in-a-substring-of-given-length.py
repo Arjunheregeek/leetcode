@@ -5,7 +5,7 @@ class Solution:
         end= k-1
         ma=0
        
-        vo={"a","i","e","o","u"}
+        vo="aeiou"
         for j in s[start:end+1]:
 
 

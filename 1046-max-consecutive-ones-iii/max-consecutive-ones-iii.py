@@ -3,6 +3,8 @@ class Solution:
         start = 0
         c = k  
         ma = 0
+        if len(nums)==0:
+            return 0
 
         for end in range(len(nums)):
             if nums[end] == 0:

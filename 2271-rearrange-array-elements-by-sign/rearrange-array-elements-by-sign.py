@@ -1,6 +1,6 @@
 class Solution:
     def rearrangeArray(self, nums: List[int]) -> List[int]:
-        '''a=len(nums)//2
+        a=len(nums)//2
         po=[]
         ne=[]
         ans=[]
@@ -12,9 +12,9 @@ class Solution:
         for i in range (a):
             ans.append(po[i])
             ans.append(ne[i])
-        return ans'''
+        return ans
         
-        ans=[0]*len(nums)
+        '''ans=[0]*len(nums)
         p=0
         n=1
         for i in range(len(nums)):
@@ -24,7 +24,7 @@ class Solution:
             else:
                 ans[n]=nums[i]
                 n+=2
-        return ans
+        return ans'''
 
             
 

@@ -3,7 +3,12 @@ class Solution:
         pf=0
         val=prices[0]
         for i in range(1,len(prices)):
-            pf = max(pf,prices[i]-val)
-            val= min(val,prices[i])
+            if prices[i]>val:
+                pf = max(pf,prices[i]-val)
+            else:
+                val= min(val,prices[i])
+
+            
+            
         return pf
             

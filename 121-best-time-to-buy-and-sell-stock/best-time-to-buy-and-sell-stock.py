@@ -5,8 +5,10 @@ class Solution:
         for i in range(1,len(prices)):
             if prices[i]>val:
                 pf = max(pf,prices[i]-val)
-            else:
+            elif prices[i]<val:
                 val= min(val,prices[i])
+            else:
+                continue 
 
             
             

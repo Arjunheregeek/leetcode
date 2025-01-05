@@ -1,19 +1,21 @@
 class Solution:
-    def shiftingLetters(self, s: str, shifts: list[list[int]]) -> str:
-        n = len(s)
-        shift = [0] * (n + 1)
+    def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
+        cum_shifts = [0] * (len(s) + 1) 
 
-        for shiftOp in shifts:
-            start, end, direction = shiftOp
-            shift[start] += (1 if direction == 1 else -1)
-            if end + 1 < n:
-                shift[end + 1] -= (1 if direction == 1 else -1)
+        for st, en, d in shifts: 
+            if d == 0: 
+                cum_shifts[st] -= 1 
+                cum_shifts[en+1] += 1
+            else: 
+                cum_shifts[st] += 1
+                cum_shifts[en+1] -= 1 
 
-        currentShift = 0
-        shiftList = list(s)
-        for i in range(n):
-            currentShift += shift[i]
-            netShift = (currentShift % 26 + 26) % 26
-            shiftList[i] = chr((ord(shiftList[i]) - ord('a') + netShift) % 26 + ord('a'))
+        cum_sum = 0
+        s = list(s)
+        for i in range(len(s)): 
+            cum_sum += cum_shifts[i]
 
-        return ''.join(shiftList)
+            new_code = (((ord(s[i]) + cum_sum) - 97) % 26) + 97 
+            s[i] =  chr(new_code)
+        
+        return ''.join(s)

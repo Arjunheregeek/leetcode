@@ -1,13 +1,23 @@
 class Solution:
     def canConstruct(self, s: str, k: int) -> bool:
-        if len(s) < k:
+        
+        n = len(s)
+        if k>n:
             return False
-        if len(s) == k:
-            return True
+        cnt = 0
+        dic =Counter(s) 
+        for j in dic.keys():
+            if dic[j]%2 != 0 :
+                cnt +=1 
 
-        odd = 0
 
-        for chr in s:
-            odd ^= (1 << (ord(chr) - ord('a')))
 
-        return bin(odd).count('1') <= k
+        if cnt>k :
+            return False 
+        
+        return True
+'''bhai mujhe ache se smjh nhi aa rha logic ..thoda aya a..aaabki comment mae likha h '''
+
+        
+        
+        

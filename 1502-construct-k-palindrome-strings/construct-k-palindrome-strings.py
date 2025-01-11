@@ -1,23 +1,11 @@
 class Solution:
     def canConstruct(self, s: str, k: int) -> bool:
+
+        freq = Counter(s)
         
-        n = len(s)
-        if k>n:
-            return False
-        cnt = 0
-        dic =Counter(s) 
-        for j in dic.keys():
-            if dic[j]%2 != 0 :
-                cnt +=1 
+        odd_count = sum(1 for count in freq.values() if count % 2 != 0)
+       
+        return odd_count <= k <= len(s)
 
 
-
-        if cnt>k :
-            return False 
-        
-        return True
-'''bhai mujhe ache se smjh nhi aa rha logic ..thoda aya a..aaabki comment mae likha h '''
-
-        
-        
         

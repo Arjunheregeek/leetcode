@@ -6,9 +6,12 @@ class Solution:
         d={}
         for i in  nums:
             
-            k=list(str(i))
-            s= np.array(k,dtype="int")
-            j=sum(s.tolist())
+            
+            k=i
+            j = 0
+            while k> 0:
+                j+= k % 10  # Get last digit and add to total
+                k //= 10
             if j in d :
                 ans=max(ans,i+d[j])
             else:

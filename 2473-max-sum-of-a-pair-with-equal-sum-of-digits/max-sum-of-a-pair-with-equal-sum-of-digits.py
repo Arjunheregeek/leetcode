@@ -1,24 +1,29 @@
+
 class Solution:
-    def sum_digit(self,x):
-        ds = 0 
-        while x>0 :
-            ds += x%10 
-            x //= 10
-
-        return ds
-
-
+    import numpy as np
     def maximumSum(self, nums: List[int]) -> int:
-        dic = {}
-        maxi = -1
-        for i in nums :
-            x = self.sum_digit(i)
+        ans=0
+        d={}
+        for i in  nums:
+            
+            
+            k=i
+            j = 0
+            while k> 0:
+                j+= k % 10  # Get last digit and add to total
+                k //= 10
+            if j in d :
+                ans=max(ans,i+d[j])
+            else:
+                d[j]=i
 
-            if x in dic :
-                maxi=max(maxi,i+dic[x])
-            else :
-                dic[x]=i
-            dic[x]=max(dic[x],i)
+            d[j]=max(d[j],i)
+        if ans==0:
+            return -1
+        return ans
+            
+                   
 
-                
-        return maxi
+
+
+        

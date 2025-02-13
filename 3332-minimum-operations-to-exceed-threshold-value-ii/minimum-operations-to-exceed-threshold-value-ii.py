@@ -1,16 +1,37 @@
 class Solution:
-    def minOperations(self,nums, k):
-        heapq.heapify(nums)  # Convert nums into a min-heap
-        operations = 0
-
-        while len(nums) > 1 and nums[0] < k:  
-            x = heapq.heappop(nums)  # Smallest element
-            y = heapq.heappop(nums)  # Second smallest element
-
-            # Apply the operation
-            new_val = 2 * min(x, y) + max(x, y)
-            heapq.heappush(nums, new_val)
-
-            operations += 1  # Increment operation count
-
-        return operations if nums[0] >= k else -1
+    def minOperations(self, nums: list[int], k: int) -> int:
+        nums.sort()
+        n = len(nums)
+        ret = 0
+        i = 0
+        temp = []
+        j = 0
+        size = 0
+        while (n-i + size-j) >= 2:
+            if i < n:
+                first = nums[i]
+                if j < size and temp[j] < first:
+                    first = temp[j]
+                    j += 1
+                else:
+                    i += 1
+            else:
+                first = temp[j]
+                j += 1
+            if first >= k:
+                break
+            if i < n:
+                second = nums[i]
+                if j < size and temp[j] < second:
+                    second = temp[j]
+                    j += 1
+                else:
+                    i += 1
+            else:
+                second = temp[j]
+                j += 1
+            new = (min(first, second)*2) + max(first, second)
+            size += 1
+            ret += 1
+            temp.append(new)
+        return ret

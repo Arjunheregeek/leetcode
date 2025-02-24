@@ -1,32 +1,37 @@
 class Solution:
     def mostProfitablePath(self, edges: List[List[int]], bob: int, amount: List[int]) -> int:
-        graph = {i: [] for i in range(len(amount))}
-        for u, v in edges:
-            graph[u].append(v)
-            graph[v].append(u)
+        n = len(edges) + 1
+        g = [[] for _ in range(n)]
+        for x, y in edges:
+            g[x].append(y)
+            g[y].append(x)
         
-        bobPath = [-1] * len(amount)
-        path = []
-
-        def fillBobPath(node, parent):
-            if node == 0:
+        bob_time = [n] * n
+        def dfs_bob(x: int, fa: int, t: int) -> bool:
+            if x == 0:
+                bob_time[x] = t
                 return True
-            for neighbor in graph[node]:
-                if neighbor != parent:
-                    path.append(node)
-                    if fillBobPath(neighbor, node):
-                        return True
-                    path.pop()
+            for y in g[x]:
+                if y != fa and dfs_bob(y, x, t + 1):
+                    bob_time[x] = t
+                    return True
+            return False
+        dfs_bob(bob, -1, 0)
 
-        fillBobPath(bob, -1)
-        for i, node in enumerate(path):
-            bobPath[node] = i
+        g[0].append(-1)
+        ans = -inf
+        def dfs_alice(x: int, fa: int, alice_time: int, tot: int) -> None:
+            if alice_time < bob_time[x]:
+                tot += amount[x]
+            elif alice_time == bob_time[x]:
+                tot += amount[x] // 2
+            if len(g[x]) == 1:
+                nonlocal ans
+                ans = max(ans, tot)
+                return
+            for y in g[x]:
+                if y != fa:
+                    dfs_alice(y, x, alice_time + 1, tot)
         
-        def getAliceMaxScore(node, parent, currScore, timestamp):
-            if bobPath[node] == -1 or bobPath[node] > timestamp:
-                currScore += amount[node]
-            elif bobPath[node] == timestamp:
-                currScore += amount[node] // 2
-            return currScore if len(graph[node]) == 1 and node != 0 else max(getAliceMaxScore(neighbor, node, currScore, timestamp + 1) for neighbor in graph[node] if neighbor != parent)
-
-        return getAliceMaxScore(0, -1, 0, 0)
+        dfs_alice(0, -1, 0, 0)
+        return ans

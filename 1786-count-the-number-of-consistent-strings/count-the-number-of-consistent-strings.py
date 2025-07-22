@@ -1,13 +1,19 @@
 class Solution:
     def countConsistentStrings(self, allowed: str, words: List[str]) -> int:
-        # Create the set of allowed characters once, outside the loop.
+        # Renamed 'i' to 'allowed_set' for clarity
         allowed_set = set(allowed)
-        consistent_count = 0
-
+        
+        # Renamed 'c' to 'count'
+        count = 0
+        
+        # Renamed 'j' to 'word'
         for word in words:
-            # Use the all() function with a generator expression.
-            # It efficiently checks if all characters in the word are in the allowed_set.
-            if all(char in allowed_set for char in word):
-                consistent_count += 1
-
-        return consistent_count
+            word_set = set(word)
+            
+            # This is the key change. issubset() directly checks if all
+            # elements of word_set are present in allowed_set.
+            # It's more readable than checking if the difference is an empty set.
+            if word_set.issubset(allowed_set):
+                count += 1
+                
+        return count

@@ -2,8 +2,14 @@ class Solution:
     def isPowerOfThree(self, n: int) -> bool:
         if n <= 0:
             return False
-        base3 = ""
+        count1 = 0
         while n > 0:
-            base3 = str(n % 3) + base3
+            digit = n % 3
+            if digit == 1:
+                count1 += 1
+                if count1 > 1:
+                    return False
+            if digit == 2:
+                return False
             n //= 3
-        return bool(re.match(r"^10*$", base3))
+        return count1 == 1

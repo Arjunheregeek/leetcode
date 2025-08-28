@@ -1,19 +1,39 @@
 class Solution:
     def sortMatrix(self, grid: List[List[int]]) -> List[List[int]]:
-        import heapq
-        n, m = len(grid), len(grid[0])
-        diags = {}
+        n = len(grid)
 
-        for i in range(n):
-            for j in range(m):
-                key = i - j
-                if key not in diags: diags[key] = []
-                if key < 0: heapq.heappush(diags[key], grid[i][j])
-                else: heapq.heappush(diags[key], -grid[i][j])
+        for k in range(n):
+            arr = []
+            i, j = k, 0
 
-        for i in range(n):
-            for j in range(m):
-                key = i - j
-                if key < 0: grid[i][j] = heapq.heappop(diags[key])
-                else: grid[i][j] = -heapq.heappop(diags[key])
+            while i < n:
+                arr.append(grid[i][j])
+                i += 1
+                j += 1
+            
+            arr.sort(reverse=True)
+            i, j = k, 0
+
+            while i < n:
+                grid[i][j] = arr[j]
+                i += 1
+                j += 1
+        
+        for k in range(1, n):
+            arr = []
+            i, j = 0, k
+
+            while j < n:
+                arr.append(grid[i][j])
+                i += 1
+                j += 1
+            
+            arr.sort()
+            i, j = 0, k
+
+            while j < n:
+                grid[i][j] = arr[i]
+                i += 1
+                j += 1
+        
         return grid

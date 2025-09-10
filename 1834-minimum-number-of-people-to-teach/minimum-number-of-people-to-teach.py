@@ -1,30 +1,24 @@
 class Solution:
-    def minimumTeachings(self, totalLanguages, userLanguages, friendships):
-        users_to_teach = set()
+    def minimumTeachings(self, n: int, languages: List[List[int]], friendships: List[List[int]]) -> int:
+        learned = list(map(set, languages))
 
-        # Step 1: Identify users who can't communicate
-        for user1, user2 in friendships:
-            user1 -= 1  # Convert to 0-based index
-            user2 -= 1
-            can_communicate = False
+        total = 0
+        vis = [False] * len(languages)
+        cnt = [0] * (n + 1)
 
-            for lang1 in userLanguages[user1]:
-                if lang1 in userLanguages[user2]:
-                    can_communicate = True
-                    break
+        def add(u: int) -> None:
+            if vis[u]:
+                return
+            vis[u] = True  # 避免重复统计
+            nonlocal total
+            total += 1
+            for x in languages[u]:
+                cnt[x] += 1
 
-            if not can_communicate:
-                users_to_teach.add(user1)
-                users_to_teach.add(user2)
+        for u, v in friendships:
+            # 减一，下标从 0 开始
+            if learned[u - 1].isdisjoint(learned[v - 1]):  # 无交集
+                add(u - 1)
+                add(v - 1)
 
-        # Step 2: Try teaching each language
-        min_users_to_teach = len(userLanguages) + 1
-
-        for language in range(1, totalLanguages + 1):
-            count = 0
-            for user in users_to_teach:
-                if language not in userLanguages[user]:
-                    count += 1
-            min_users_to_teach = min(min_users_to_teach, count)
-
-        return min_users_to_teach
+        return total - max(cnt)
